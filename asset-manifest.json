@@ -1,0 +1,14 @@
+{
+  "files": {
+    "main.css": "/miniproject/static/css/main.617b1035.css",
+    "main.js": "/miniproject/static/js/main.fba4df6b.js",
+    "static/media/cat.jpg": "/miniproject/static/media/cat.f7cbf314c4d1d0f75758.jpg",
+    "index.html": "/miniproject/index.html",
+    "main.617b1035.css.map": "/miniproject/static/css/main.617b1035.css.map",
+    "main.fba4df6b.js.map": "/miniproject/static/js/main.fba4df6b.js.map"
+  },
+  "entrypoints": [
+    "static/css/main.617b1035.css",
+    "static/js/main.fba4df6b.js"
+  ]
+}
