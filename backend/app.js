@@ -10,6 +10,7 @@ app.set("view engine", "ejs");
 app.use(express.urlencoded({ extended: false }));
 app.get('/', (req,res)=>{
   res.setHeader("Access-Control-Allow-Credentials","true");
+  res.send("Api is running")
 })
 
 const jwt = require("jsonwebtoken");
