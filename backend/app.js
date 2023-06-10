@@ -8,6 +8,9 @@ app.use(cors());
 const bcrypt = require("bcryptjs");
 app.set("view engine", "ejs");
 app.use(express.urlencoded({ extended: false }));
+app.get('/', (req,res)=>{
+  res.setHeader("Access-Control-Allow-Credentials","true");
+})
 
 const jwt = require("jsonwebtoken");
 var nodemailer = require("nodemailer");
@@ -98,7 +101,7 @@ app.post("/userData", async (req, res) => {
       .catch((error) => {
         res.send({ status: "error", data: error });
       });
-  } catch (error) { }
+  } catch (error) {}
 });
 
 app.listen(process.env.PORT || 5000, () => {
@@ -140,7 +143,7 @@ app.post("/forgot-password", async (req, res) => {
       }
     });
     console.log(link);
-  } catch (error) { }
+  } catch (error) {}
 });
 
 app.get("/reset-password/:id/:token", async (req, res) => {
@@ -211,52 +214,46 @@ app.post("/deleteUser", async (req, res) => {
   }
 });
 
-
 app.post("/upload-image", async (req, res) => {
   const { base64 } = req.body;
   try {
     await Images.create({ image: base64 });
-    res.send({ Status: "ok" })
-
+    res.send({ Status: "ok" });
   } catch (error) {
     res.send({ Status: "error", data: error });
-
   }
-})
+});
 
 app.get("/get-image", async (req, res) => {
   try {
-    await Images.find({}).then(data => {
-      res.send({ status: "ok", data: data })
-    })
-
-  } catch (error) {
-
-  }
-})
+    await Images.find({}).then((data) => {
+      res.send({ status: "ok", data: data });
+    });
+  } catch (error) {}
+});
 
 app.get("/paginatedUsers", async (req, res) => {
   const allUser = await User.find({});
-  const page = parseInt(req.query.page)
-  const limit = parseInt(req.query.limit)
+  const page = parseInt(req.query.page);
+  const limit = parseInt(req.query.limit);
 
-  const startIndex = (page - 1) * limit
-  const lastIndex = (page) * limit
+  const startIndex = (page - 1) * limit;
+  const lastIndex = page * limit;
 
-  const results = {}
-  results.totalUser=allUser.length;
-  results.pageCount=Math.ceil(allUser.length/limit);
+  const results = {};
+  results.totalUser = allUser.length;
+  results.pageCount = Math.ceil(allUser.length / limit);
 
   if (lastIndex < allUser.length) {
     results.next = {
       page: page + 1,
-    }
+    };
   }
   if (startIndex > 0) {
     results.prev = {
       page: page - 1,
-    }
+    };
   }
   results.result = allUser.slice(startIndex, lastIndex);
-  res.json(results)
-})
+  res.json(results);
+});
